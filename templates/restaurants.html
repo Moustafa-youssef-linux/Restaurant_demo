@@ -2,6 +2,12 @@
   <head>
     <title>Home page</title>
     <h1> Restaurants Page </h1>
+    {% for rest in restaurants %}
+    <tr>
+	    <td>{{rest[0]}}</td>
+	    <br>
+   </tr>
+   {% endfor %}
   </head>
 </html>
 
