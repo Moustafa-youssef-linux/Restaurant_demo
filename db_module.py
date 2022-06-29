@@ -33,6 +33,27 @@ def get_rest():
 
     return restaurants
 
+##################################################
+################ get orders ######################
+
+def get_order():
+    dbconfig = { 'host': '127.0.0.1',
+               'user': 'rest',
+               'password': 'root123',
+               'database': 'restaurant',
+             }
+    conn = mysql.connector.connect(**dbconfig)
+    cursor = conn.cursor()
+    _SQL = """select items from orders"""
+    cursor.execute(_SQL)
+    orders = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return orders
+####################################################
+
+
 def auth_(username: str , password: str) -> bool:
     dbconfig = { 'host': '127.0.0.1',
                'user': 'rest',

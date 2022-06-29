@@ -63,9 +63,11 @@ def restaurant():
 def admin_console():
     error = None
     if request.method == 'GET':
-        select = request.form.get('actions')
+        #select = request.form.get('actions')
         #print (select)
-        return render_template('console.html')
+        data = db_module.get_rest()
+        orders_ = db_module.get_order()
+        return render_template('console.html', restaurants=data,orders=orders_)
     else:
         #error = "Wrong url"
         select = request.form.get('actions')
@@ -138,6 +140,14 @@ def update_rest():
           return render_template('update.html')
 
 
+##################################################
+################# Home & Order Pages #############
+##################################################
 
+@app.route('/order', methods=['GET','POST'])
+def order():
+    error = None
+    if request.method == 'GET':
+       render_template('order.html')
 
 app.run(debug=True)
