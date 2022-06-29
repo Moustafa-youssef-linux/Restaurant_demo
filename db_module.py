@@ -28,6 +28,8 @@ def get_rest():
     _SQL = """select rest_name from rest"""
     cursor.execute(_SQL)
     restaurants = cursor.fetchall()
+    cursor.close()
+    conn.close()
 
     return restaurants
 
@@ -42,6 +44,8 @@ def auth_(username: str , password: str) -> bool:
     query = "SELECT * FROM users"
     cursor.execute(query)
     user_records = cursor.fetchall()
+    cursor.close()
+    conn.close()
     
     #users_in_db = users_records[0][1]
     #print (user_records[0])
@@ -52,7 +56,7 @@ def auth_(username: str , password: str) -> bool:
             return True
     return False    
 
-def register_(username,fn,ln,age,gender,password):
+def register_(username:str,fn:str,ln:str,age:int,gender:str,password:str): -> None
     dbconfig = { 'host': '127.0.0.1',
                'user': 'rest',
                'password': 'root123',
@@ -71,5 +75,18 @@ def register_(username,fn,ln,age,gender,password):
     conn.close()
 
 
-
+def create_(name:str,food_type:str,review:str): -> None
+    dbconfig = { 'host': '127.0.0.1',
+               'user': 'rest',
+               'password': 'root123',
+               'database': 'restaurant',
+             }
+    conn = mysql.connector.connect(**dbconfig)
+    cursor = conn.cursor()
+    query = "insert into res (rest_name,food_type,review) values (%s, %s, %s)"
+    values = (name,food_type,review)
+    cursor.execute(query,values)
+    conn.commit()
+    cursor.close()
+    conn.close()
 
