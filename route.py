@@ -10,15 +10,14 @@ def entry():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    error = "Athentication Faild!,Please Register"
+    error = None
     print (request.method)
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         exist = db_module.auth_(username,password)
         if not exist  :
-            #error = 'Invalid Credentials. Please try again.'
-            #data = db_module.database_con()
+            error = "Invalid Credentials. Please try again.\n <div class=\"text\"> <h3>Create a new account <a href=\"/registration\">Register.</a></h3>"
             return str(error)
             #error = data
         elif exist and username =='admin' :
@@ -42,7 +41,7 @@ def registration():
         if  u_ !=  'admin':
           result= db_module.register_(u_,fn_,ln_,age_,gender_,pass_)
           #return redirect(url_for('reg_result', error=error))
-          return str("Registration is done.")
+          return render_template('reg_result.html')
         else:
             error = 'Please Fill all the inputs'
     return render_template('registration.html', error=error)
@@ -60,7 +59,7 @@ def restaurant():
 
 
 
-@app.route('/admin_console', methods=['GET', 'POST'])
+@app.route('/admin_console', methods=['GET','POST'])
 def admin_console():
     error = None
     if request.method == 'GET':
@@ -74,17 +73,71 @@ def admin_console():
             return redirect(url_for('restaurant'))
         elif select == 'add':
             return redirect(url_for('create_rest'))
+        elif select == 'delete':
+            return redirect(url_for('delete_rest'))
+        elif select == 'update':
+            return redirect(url_for('update_rest'))
         #print (select)
         return str(select)
-
 
 @app.route('/rest/create', methods=['GET', 'POST'])
 def create_rest():
     error = None
-    if request.method == 'GET':
+    print (request.method + "#########")
+    if request.method == 'POST':
+        print ("yessssookkkkk")
+        rest_name = request.form['rest_name']
+        print (rest_name)
+        type_ = request.form['type']
+        review = request.form['review']
+        result = db_module.create_(rest_name,type_,review)
+        print (rest_name,type_,review)
+        print ("Okay this is pooooooooooost")
+        if result == None:
+            mesg = "the Restaurant: "+rest_name+" has been added.\n <div class=\"text\"> <h3>Doing another Management Action<a href=\"/admin_console\">!Click here</a></h3> </div> "
+            return str(mesg)
+        else:
+           error = "Something went wrong"
+           return str(error)
+    elif request.method == 'GET':
         return render_template('create.html')
-        
+    else:
+        error = "There is no API with this request"
+        return str(error)
+@app.route('/rest/delete', methods=['GET', 'POST'])
+def delete_rest():
+    error = None
+    if request.method == 'POST':
+          rest_name = request.form['rest_name'] 
+          result = db_module.delete_(rest_name)
+          if result == None:
+              mesg = "the Restaurant: "+rest_name+" has been deleted.\n <div class=\"text\"> <h3>Doing another Management Action<a href=\"/admin_console\">!Click here</a></h3> </div>"
+              return str(mesg)
+          else:
+              error = "Something went wrong"
+              return str(error)
+    else:
+          return render_template('delete.html')
+
+@app.route('/rest/update', methods=['GET','POST'])
+def update_rest():        
+    error = None
+    if request.method == 'POST':
+          rest_name_ = request.form['rest_name']
+          category_ = request.form['food_type']
+          review_ = request.form['review']
+
+          result = db_module.update_(restname=rest_name_,food_type=category_,review=review_)
+          if result == None:
+              mesg = "the Restaurant: "+rest_name_+" has been Updated.\n <div class=\"text\"> <h3>Doing another Management Action<a href=\"/admin_console\">!Click here</a></h3> </div>"
+              return str(mesg)
+          else:
+              error = "Something went wrong"
+              return str(result)
+    else:
+          return render_template('update.html')
 
 
 
-app.run()
+
+app.run(debug=True)

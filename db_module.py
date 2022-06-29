@@ -56,7 +56,7 @@ def auth_(username: str , password: str) -> bool:
             return True
     return False    
 
-def register_(username:str,fn:str,ln:str,age:int,gender:str,password:str): -> None
+def register_(username:str,fn:str,ln:str,age:int,gender:str,password:str) -> None:
     dbconfig = { 'host': '127.0.0.1',
                'user': 'rest',
                'password': 'root123',
@@ -75,7 +75,7 @@ def register_(username:str,fn:str,ln:str,age:int,gender:str,password:str): -> No
     conn.close()
 
 
-def create_(name:str,food_type:str,review:str): -> None
+def create_(name:str,food_type:str,review:str) -> None:
     dbconfig = { 'host': '127.0.0.1',
                'user': 'rest',
                'password': 'root123',
@@ -83,10 +83,82 @@ def create_(name:str,food_type:str,review:str): -> None
              }
     conn = mysql.connector.connect(**dbconfig)
     cursor = conn.cursor()
-    query = "insert into res (rest_name,food_type,review) values (%s, %s, %s)"
+    query = "insert into rest (rest_name,food_type,review) values (%s, %s, %s)"
     values = (name,food_type,review)
     cursor.execute(query,values)
     conn.commit()
     cursor.close()
     conn.close()
+
+def delete_(name:str) -> None:
+    dbconfig = { 'host': '127.0.0.1',
+               'user': 'rest',
+               'password': 'root123',
+               'database': 'restaurant',
+             }
+    conn = mysql.connector.connect(**dbconfig)
+    cursor = conn.cursor()
+    #query = "delete from rest where rest_name = %s"
+    #values = (name)
+    cursor.execute(
+    "select restID from rest where rest_name = %s", [name])
+    rest_id = cursor.fetchone()[0]
+    print (rest_id)
+
+    cursor.execute(
+    "delete from orders where restID = %s", [rest_id])
+    cursor.execute(
+    "delete from rest where rest_name = %s", [name])
+    #cursor.execute(query,values)
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def update_(restname:str=None,food_type:str=None,review:str=None) -> None:
+
+    if food_type == None and review == None:
+        mesg = "nothing to be updated!"
+        return (mesg) 
+    elif food_type == '' and review == '':
+        mesg = "Nothing to be updated!"
+        food_type=None
+        review=None
+        return (mesg)
+    else:
+        dbconfig = { 'host': '127.0.0.1',
+               'user': 'rest',
+               'password': 'root123',
+               'database': 'restaurant',
+             }
+        if  food_type  and review:
+            conn = mysql.connector.connect(**dbconfig)
+            cursor = conn.cursor()
+            query = """Update rest set food_type = %s, review = %s where rest_name = %s"""
+            values = (food_type, review, restname)
+            cursor.execute(query, values)
+            conn.commit()
+            cursor.close()
+            conn.close()
+        elif food_type and not review:
+            conn = mysql.connector.connect(**dbconfig)
+            cursor = conn.cursor()
+            query = """Update rest set  food_type = %s where rest_name = %s"""
+            values = (food_type, restname)
+            cursor.execute(query, values)
+            conn.commit()
+            cursor.close()
+            conn.close()
+        elif not food_type and review :    
+            conn = mysql.connector.connect(**dbconfig)
+            cursor = conn.cursor()
+            query = """Update rest set  review = %s where rest_name = %s"""
+            values = (review, restname)
+            cursor.execute(query, values)
+            conn.commit()
+            cursor.close()
+            conn.close()
+        else:
+            mesg = "No Update for Any Restaurant!"
+            return mesg
+
 
