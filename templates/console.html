@@ -1,5 +1,10 @@
 <html>
   <head>
+    <style>
+         table, th, td {
+            border: 1px solid black;
+         }
+    </style>	  
     <title>Admin Console</title>
     <h1 style="color:blue;text-align:center;"> Management Console </h1>
     <h2 style="background-color:powderblue;"> List of the current restaurants:</h2>
@@ -9,15 +14,43 @@
 	    <br>
     </tr>
     {% endfor %}
+    <table>
+        <tr>
+           <th>Restaurant</th>
+           <th>Category</th>
+           <th>Review</th>
+        </tr>
+        <tr>
+         {% for rest in restaurants %}
+	  <td>{{rest[0]}}</td>
+	 {% endfor %}
+          {% for type in category %}
+	  <td>{{type[0]}}</td>
+	  {% endfor %}
+          <td>Germany</td>
+        </tr>
+     </table>
 
 
+    
     <h3  style="background-color:tomato;"> List of Current orders </h3>
-    {% for order in orders %}
-    <tr>
-            <td >{{order[0]}}</td>
-            <br>
-    </tr>
-    {% endfor %}
+     <table>
+        <tr>
+           <th>Order</th>
+           <th>User</th>
+           <th>Restaurant</th>
+        </tr>
+        <tr>
+          <td>Alfreds Futterkiste</td>
+          <td>Maria Anders</td>
+          <td>Germany</td>
+        </tr>
+        <tr>
+           <td>Centro comercial Moctezuma</td>
+           <td>Francisco Chang</td>
+           <td>Mexico</td>
+        </tr>
+     </table>
   </head>
 <body>
  <br>	

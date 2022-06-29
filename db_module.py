@@ -33,6 +33,21 @@ def get_rest():
 
     return restaurants
 
+def get_category():
+    dbconfig = { 'host': '127.0.0.1',
+               'user': 'rest',
+               'password': 'root123',
+               'database': 'restaurant',
+             }
+    conn = mysql.connector.connect(**dbconfig)
+    cursor = conn.cursor()
+    _SQL = """select food_type from rest"""
+    cursor.execute(_SQL)
+    types = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return types
+
 ##################################################
 ################ get orders ######################
 

@@ -65,9 +65,10 @@ def admin_console():
     if request.method == 'GET':
         #select = request.form.get('actions')
         #print (select)
-        data = db_module.get_rest()
+        rest_ = db_module.get_rest()
+        category_ = db_module.get_category()
         orders_ = db_module.get_order()
-        return render_template('console.html', restaurants=data,orders=orders_)
+        return render_template('console.html', rest=rest_,orders=orders_,category=category_)
     else:
         #error = "Wrong url"
         select = request.form.get('actions')
@@ -150,4 +151,7 @@ def order():
     if request.method == 'GET':
        render_template('order.html')
 
-app.run(debug=True)
+#app.run(debug=True)
+if __name__ == '__main__':
+   app.run(debug=True)
+
