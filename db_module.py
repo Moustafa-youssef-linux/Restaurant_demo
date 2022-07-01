@@ -41,7 +41,7 @@ def get_category():
              }
     conn = mysql.connector.connect(**dbconfig)
     cursor = conn.cursor()
-    _SQL = """select food_type from rest"""
+    _SQL = """select * from rest"""
     cursor.execute(_SQL)
     types = cursor.fetchall()
     cursor.close()
@@ -59,7 +59,7 @@ def get_order():
              }
     conn = mysql.connector.connect(**dbconfig)
     cursor = conn.cursor()
-    _SQL = """select items from orders"""
+    _SQL = """select * from order_view"""
     cursor.execute(_SQL)
     orders = cursor.fetchall()
     cursor.close()

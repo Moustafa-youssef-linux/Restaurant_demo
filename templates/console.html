@@ -8,12 +8,6 @@
     <title>Admin Console</title>
     <h1 style="color:blue;text-align:center;"> Management Console </h1>
     <h2 style="background-color:powderblue;"> List of the current restaurants:</h2>
-    {% for rest in restaurants %}
-    <tr>
-	    <td style="font-family:courier;">{{rest[0]}}</td>
-	    <br>
-    </tr>
-    {% endfor %}
     <table>
         <tr>
            <th>Restaurant</th>
@@ -21,14 +15,12 @@
            <th>Review</th>
         </tr>
         <tr>
-         {% for rest in restaurants %}
-	  <td>{{rest[0]}}</td>
-	 {% endfor %}
-          {% for type in category %}
-	  <td>{{type[0]}}</td>
-	  {% endfor %}
-          <td>Germany</td>
+        {% for record in data %}
+	  <td>{{record[1]}}</td>
+	  <td>{{record[2]}}</td>
+	  <td>{{record[3]}}</td>
         </tr>
+	{% endfor %}
      </table>
 
 
@@ -36,20 +28,19 @@
     <h3  style="background-color:tomato;"> List of Current orders </h3>
      <table>
         <tr>
-           <th>Order</th>
+           <th>Order Date</th>
            <th>User</th>
-           <th>Restaurant</th>
+           <th>Order</th>
+	   <th>Restaurant</th>
         </tr>
+	{% for order in order_view %}
         <tr>
-          <td>Alfreds Futterkiste</td>
-          <td>Maria Anders</td>
-          <td>Germany</td>
+		<td>{{order[0]}}</td>
+		<td>{{order[1]}}</td>
+		<td>{{order[2]}}</td>
+                <td>{{order[3]}}</td>
         </tr>
-        <tr>
-           <td>Centro comercial Moctezuma</td>
-           <td>Francisco Chang</td>
-           <td>Mexico</td>
-        </tr>
+	{% endfor %}
      </table>
   </head>
 <body>
