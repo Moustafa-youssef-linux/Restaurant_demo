@@ -67,6 +67,23 @@ def get_order():
 
     return orders
 ####################################################
+def get_order_user_history(username):
+    dbconfig = { 'host': '127.0.0.1',
+               'user': 'rest',
+               'password': 'root123',
+               'database': 'restaurant',
+             }
+    conn = mysql.connector.connect(**dbconfig)
+    cursor = conn.cursor()
+    cursor.execute(
+    "select * from order_view where username = %s", [username])
+
+    orders = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return orders
+####################################################
 
 
 def auth_(username: str , password: str) -> bool:

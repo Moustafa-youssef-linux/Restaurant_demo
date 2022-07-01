@@ -40,6 +40,13 @@ def login():
             return redirect(url_for('restaurant'))
     return render_template('login.html', error=error)
 
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    error = None
+    session.pop('logged_in')
+    return redirect(url_for('login'))
+
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
     error = None
@@ -68,10 +75,14 @@ def registration():
 def restaurant():
     error = None
     
-    if request.method == 'GET' and check_logged_in():
-        data = db_module.get_rest()    
+    if request.method == 'GET' and check_logged_in() and session['username'] != 'admin':
+        user = session['username']
+        data_ = db_module.get_order_user_history(user)
+        rest_ = db_module.get_rest()
         print (session['username'])
-        return render_template('restaurants.html', restaurants=data)
+        return render_template('restaurants.html', orders =data_,restaurants=rest_)
+    elif request.method == 'GET' and check_logged_in() and session['username'] == 'admin':
+        return str("Sorry, This page is not for admins!!\n Try to login as a normal user")
     else:
         return redirect(url_for('login'))
 
