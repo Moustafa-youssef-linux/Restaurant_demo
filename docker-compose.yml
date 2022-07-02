@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  webapp:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        buildno: 1
+  database:
+    build:      
+      context: ./database
+      dockerfile: Dockerfile
+      args:
+        buildno: 2
+
