@@ -26,7 +26,7 @@ def login():
         password = request.form['password']
         exist = db_module.auth_(username,password)
         if not exist  :
-            error = "Invalid Credentials. Please try again.\n <div class=\"text\"> <h3>Create a new account <a href=\"/registration\">Register.</a></h3>"
+            error = "Invalid Credentials. Please try again.\n <div class=\"text\"> <a href=\"/login\">Login.</a> <h3>Create a new account <a href=\"/registration\">Register.</a></h3>"
             return str(error)
             #error = data
         elif exist and username =='admin' :
@@ -71,7 +71,7 @@ def registration():
 ##    -> values ("admin","admin","admin",28,"male","admin@123");
 
 #
-@app.route('/restaurants', methods=['GET'])
+@app.route('/restaurants', methods=['GET','POST'])
 def restaurant():
     error = None
     
@@ -79,11 +79,23 @@ def restaurant():
         user = session['username']
         data_ = db_module.get_order_user_history(user)
         rest_ = db_module.get_category()
+        rest_name_ = db_module.get_rest()
         print (rest_)
         print (session['username'])
-        return render_template('restaurants.html', orders=data_,restaurants=rest_)
+        return render_template('restaurants.html', orders=data_,restaurants=rest_,rest=rest_name_)
     elif request.method == 'GET' and check_logged_in() and session['username'] == 'admin':
-        return str("Sorry, This page is not for admins!!\n Try to login as a normal user")
+        return str("Sorry, This page is not for admins!!\n Try to login as a normal user <h3>Try to login again: <a href=\"/login\">Login</a></h3>")
+    elif request.method == 'POST' and check_logged_in() and session['username'] != 'admin':
+        item = request.form['order']
+        rest = request.form.get('actions')
+        user = session['username']
+        print (rest,user,item)
+        result = db_module.add_order(rest,user,item)
+        if result == None:
+           mesg = "Your order has been submitted <h3>check you order <a href=\"/restaurants\">home</a></h3>"
+           return str(mesg)
+        else:
+            return str("something went wrong") 
     else:
         return redirect(url_for('login'))
 

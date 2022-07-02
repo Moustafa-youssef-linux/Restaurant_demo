@@ -67,6 +67,34 @@ def get_order():
 
     return orders
 ####################################################
+def add_order(rest_name,username,order: str) -> None:
+    dbconfig = { 'host': '127.0.0.1',
+               'user': 'rest',
+               'password': 'root123',
+               'database': 'restaurant',
+             }
+    conn = mysql.connector.connect(**dbconfig)
+    cursor = conn.cursor()
+    cursor.execute(
+    "select restID from rest where rest_name = %s", [rest_name])
+    rest_id = cursor.fetchone()[0]
+    cursor.execute(
+    "select userID from users where username = %s", [username])
+    user_id = cursor.fetchone()[0]
+    print (rest_id,user_id)
+    query = "insert into orders (items, userID, restID) values (%s, %s, %s)"
+    values = (order, user_id, rest_id)
+    cursor.execute(query,values)
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
+
+
+
+
+#####################################################
 def get_order_user_history(username):
     dbconfig = { 'host': '127.0.0.1',
                'user': 'rest',
