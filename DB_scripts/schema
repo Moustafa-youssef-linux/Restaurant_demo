@@ -23,7 +23,7 @@ insert into orders (items,userID,restID) values ("alfredo past with slice of bon
 
 ##############################
 CREATE USER   rest@127.0.0.1 IDENTIFIED BY 'root123';
-GRANT all ON restaurant.* TO rest@127.0.0.1
-
+GRANT all ON restaurant.* TO rest@'%';
+FLUSH PRIVILEGES ;
 ################################
 create view order_view AS  select orders.order_date, users.username, orders.items, rest.rest_name from orders, users, rest where orders.restID = rest.restID and orders.userID = users.userID;

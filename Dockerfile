@@ -7,6 +7,8 @@ LABEL version="1.0" \
 description="This is Flask container image" \
 creationDate="22-07-02" \
 author="Moustafa Youssef"
+MAINTAINER moustafayoussef759@gmail.com
+
 
 ENV FLASK_APP="route" 
 
