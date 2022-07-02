@@ -242,4 +242,18 @@ def update_(restname:str=None,food_type:str=None,review:str=None) -> None:
             mesg = "No Update for Any Restaurant!"
             return mesg
 
+##################################
+def get_echo():
+  dbconfig = { 'host': '127.0.0.1',
+               'user': 'rest',
+               'password': 'root123',
+               'database': 'restaurant',
+             }
+
+  conn = mysql.connector.connect(**dbconfig)
+  cursor = conn.cursor()
+  _SQL = """select message from management"""
+  cursor.execute(_SQL)
+  message = cursor.fetchall()
+  return message[0]
 

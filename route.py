@@ -201,7 +201,25 @@ def order():
     if request.method == 'GET':
        render_template('order.html')
 
+
+@app.route('/monitoring/readiness', methods=['GET'])
+def app_ready():
+    error = None
+    if request.method == 'GET':
+       return str('The application is up')
+    
+
+@app.route('/monitoring/liveness', methods=['GET'])
+def app_live():
+    error = None
+    if request.method == 'GET':
+       message = db_module.get_echo()
+       return str(message[0])
+
+
+
 #app.run(debug=True)
 if __name__ == '__main__':
    app.run(debug=True)
+
 

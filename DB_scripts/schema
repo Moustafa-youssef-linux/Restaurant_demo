@@ -4,7 +4,10 @@
 
 3- create table orders (orderID int NOT NULL UNIQUE AUTO_INCREMENT,order_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,items VARCHAR(500) NOT NULL,userID int NOT NULL,restID int NOT NULL,FOREIGN KEY (userID) REFERENCES users(userID),FOREIGN KEY (restID) REFERENCES rest(restID),PRIMARY KEY(orderID));
 
+4- create table management (mesgID int NOT NULL UNIQUE AUTO_INCREMENT,message VARCHAR(40) NOT NULL)
 
+5- insert into management (message) values ("echo from database");
+    
 ###########################
 ##### Data ################
 
