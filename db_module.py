@@ -28,7 +28,7 @@ dbconfig = { 'host': url,
              'database': db,
            }
 pool = mysql.connector.pooling.MySQLConnectionPool(pool_name = "mypool",
-                                                      pool_size = 3,
+                                                      pool_size = 32,
                                                       **dbconfig)
 ###########################################################################
 
