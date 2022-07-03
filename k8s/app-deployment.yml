@@ -37,12 +37,12 @@ spec:
               name: rest-secret    
           readinessProbe:
               httpGet:
-                      path: /monitoring/readiness
+                      path: /healthz
                       port: 5000     
           livenessProbe:
               initialDelaySeconds: 10    
               httpGet:
-                      path: /monitoring/liveness
+                      path: /health_db
                       port: 5000
       dnsPolicy: ClusterFirst
       restartPolicy: Always
