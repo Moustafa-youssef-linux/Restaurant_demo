@@ -202,14 +202,14 @@ def order():
        render_template('order.html')
 
 
-@app.route('/monitoring/readiness', methods=['GET'])
+@app.route('/healthz', methods=['GET'])
 def app_ready():
     error = None
     if request.method == 'GET':
        return str('The application is up')
     
 
-@app.route('/monitoring/liveness', methods=['GET'])
+@app.route('/health_db', methods=['GET'])
 def app_live():
     error = None
     if request.method == 'GET':
