@@ -27,7 +27,7 @@ spec:
       - env:
         - name: MYSQL_ROOT_PASSWORD
           value: PASSWORD
-        image: moustafayoussef/restaurant_database:0.1
+        image: moustafayoussef/restaurant_database:0.2
         imagePullPolicy: Always
         name: mysql
         resources: {}

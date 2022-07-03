@@ -24,7 +24,7 @@ spec:
         app: webapp
     spec:
       containers:
-        - image: moustafayoussef/restaurant_webapp:0.1
+        - image: moustafayoussef/restaurant_webapp:0.2
           imagePullPolicy: Always
           name: webapp
           resources: {}
@@ -35,6 +35,15 @@ spec:
               name: rest-configmap
           - secretRef:
               name: rest-secret    
+          readinessProbe:
+              httpGet:
+                      path: /monitoring/readiness
+                      port: 5000     
+          livenessProbe:
+              initialDelaySeconds: 10    
+              httpGet:
+                      path: /monitoring/liveness
+                      port: 5000
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
