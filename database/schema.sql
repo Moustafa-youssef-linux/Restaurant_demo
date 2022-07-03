@@ -16,6 +16,11 @@ insert into management (message) values ("echo from database");
 
 INSERT INTO users (username,fn,ln,age,gender,password) values ("admin","admin","admin",28,"male","admin@123");
 
+insert into rest (rest_name,food_type,review) values ('StarBucks','Beverages','amazing');
+
+insert into rest (rest_name,food_type,review) values ('SaleSucree','Deserts','Good');
+
+
 CREATE USER   rest@'%' IDENTIFIED BY 'root123';
 
 GRANT all ON restaurant.* TO rest@'%';
