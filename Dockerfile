@@ -1,7 +1,7 @@
 #######
 # syntax=docker/dockerfile:1
 
-FROM python:3.6
+FROM registry.access.redhat.com/rhscl/python-36-rhel7
 
 LABEL version="1.0" \
 description="This is Flask container image" \
