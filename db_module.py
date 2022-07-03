@@ -1,6 +1,6 @@
 import mysql.connector
+import mysql.connector.pooling
 import os 
-
 
 
 def get_cm():
@@ -10,23 +10,34 @@ def get_cm():
     #pass
     # config = os.environ['MY_CONFIG']
 
+
 def get_sec():
     username = os.environ['username']
     password = os.environ['password']
     return username,password
 
+
+
+###########################################################################
+############ Openning a pool of connections ###############################
+url,db = get_cm()
+user,pass_ = get_sec()
+dbconfig = { 'host': url,
+             'user': user,
+             'password': pass_,
+             'database': db,
+           }
+pool = mysql.connector.pooling.MySQLConnectionPool(pool_name = "mypool",
+                                                      pool_size = 3,
+                                                      **dbconfig)
+###########################################################################
+
+
+
 def database_con():
 
-  url,db = get_cm()
-  user,pass_ = get_sec()
-  dbconfig = { 'host': url,
-               'user': user,
-               'password': pass_,
-               'database': db,
-             }
-  
 
-  conn = mysql.connector.connect(**dbconfig)
+  conn = pool.get_connection()
   cursor = conn.cursor()
   _SQL = """select rest_name from rest"""
   cursor.execute(_SQL)
@@ -35,15 +46,8 @@ def database_con():
   #for row in res:
   #    print(row)
 def get_rest():
-    url,db = get_cm()
-    user,pass_ = get_sec()
-    dbconfig = { 'host': url,
-                 'user': user,
-                 'password': pass_,
-                 'database': db,
-               }
   
-    conn = mysql.connector.connect(**dbconfig)
+    conn = pool.get_connection()
     cursor = conn.cursor()
     _SQL = """select rest_name from rest"""
     cursor.execute(_SQL)
@@ -55,15 +59,7 @@ def get_rest():
 
 def get_category():
 
-    url,db = get_cm()
-    user,pass_ = get_sec()
-    dbconfig = { 'host': url,
-                 'user': user,
-                 'password': pass_,
-                 'database': db,
-               }
-
-    conn = mysql.connector.connect(**dbconfig)
+    conn = pool.get_connection()
     cursor = conn.cursor()
     _SQL = """select * from rest"""
     cursor.execute(_SQL)
@@ -76,15 +72,8 @@ def get_category():
 ################ get orders ######################
 
 def get_order():
-    url,db = get_cm()
-    user,pass_ = get_sec()
-    dbconfig = { 'host': url,
-                 'user': user,
-                 'password': pass_,
-                 'database': db,
-               }
 
-    conn = mysql.connector.connect(**dbconfig)
+    conn = pool.get_connection()
     cursor = conn.cursor()
     _SQL = """select * from order_view"""
     cursor.execute(_SQL)
@@ -96,15 +85,7 @@ def get_order():
 ####################################################
 def add_order(rest_name,username,order: str) -> None:
 
-    url,db = get_cm()
-    user,pass_ = get_sec()
-    dbconfig = { 'host': url,
-                 'user': user,
-                 'password': pass_,
-                 'database': db,
-               }
-
-    conn = mysql.connector.connect(**dbconfig)
+    conn = pool.get_connection()
     cursor = conn.cursor()
     cursor.execute(
     "select restID from rest where rest_name = %s", [rest_name])
@@ -128,15 +109,8 @@ def add_order(rest_name,username,order: str) -> None:
 #####################################################
 def get_order_user_history(username):
 
-    url,db = get_cm()
-    user,pass_ = get_sec()
-    dbconfig = { 'host': url,
-                 'user': user,
-                 'password': pass_,
-                 'database': db,
-               }
 
-    conn = mysql.connector.connect(**dbconfig)
+    conn = pool.get_connection()
     cursor = conn.cursor()
     cursor.execute(
     "select * from order_view where username = %s", [username])
@@ -151,15 +125,8 @@ def get_order_user_history(username):
 
 def auth_(username: str , password: str) -> bool:
 
-    url,db = get_cm()
-    user,pass_ = get_sec()
-    dbconfig = { 'host': url,
-                 'user': user,
-                 'password': pass_,
-                 'database': db,
-               }
 
-    conn = mysql.connector.connect(**dbconfig)
+    conn = pool.get_connection()
     cursor = conn.cursor()
     query = "SELECT * FROM users"
     cursor.execute(query)
@@ -178,16 +145,9 @@ def auth_(username: str , password: str) -> bool:
 
 def register_(username:str,fn:str,ln:str,age:int,gender:str,password:str) -> None:
 
-    url,db = get_cm()
-    user,pass_ = get_sec()
-    dbconfig = { 'host': url,
-                 'user': user,
-                 'password': pass_,
-                 'database': db,
-               }
 
     #print (username + fn + ln + str(age) + gender + password)
-    conn = mysql.connector.connect(**dbconfig)
+    conn = pool.get_connection()
     cursor = conn.cursor()
     query = "insert into users (username, fn, ln ,age ,gender ,password) values (%s, %s, %s, %s, %s, %s)"
     values = (username, fn, ln, age, gender, password)
@@ -201,15 +161,8 @@ def register_(username:str,fn:str,ln:str,age:int,gender:str,password:str) -> Non
 
 def create_(name:str,food_type:str,review:str) -> None:
 
-    url,db = get_cm()
-    user,pass_ = get_sec()
-    dbconfig = { 'host': url,
-                 'user': user,
-                 'password': pass_,
-                 'database': db,
-               }
 
-    conn = mysql.connector.connect(**dbconfig)
+    conn = pool.get_connection()
     cursor = conn.cursor()
     query = "insert into rest (rest_name,food_type,review) values (%s, %s, %s)"
     values = (name,food_type,review)
@@ -220,15 +173,8 @@ def create_(name:str,food_type:str,review:str) -> None:
 
 def delete_(name:str) -> None:
 
-    url,db = get_cm()
-    user,pass_ = get_sec()
-    dbconfig = { 'host': url,
-                 'user': user,
-                 'password': pass_,
-                 'database': db,
-               }
 
-    conn = mysql.connector.connect(**dbconfig)
+    conn = pool.get_connection()
     cursor = conn.cursor()
     #query = "delete from rest where rest_name = %s"
     #values = (name)
@@ -257,6 +203,7 @@ def update_(restname:str=None,food_type:str=None,review:str=None) -> None:
         review=None
         return (mesg)
     else:
+        #this block of code is not used but not deleted to not break the fun.....this happened because of adding connection pool after almost finishing coding
         url,db = get_cm()
         user,pass_ = get_sec()
         dbconfig = { 'host': url,
@@ -266,7 +213,7 @@ def update_(restname:str=None,food_type:str=None,review:str=None) -> None:
                    }
 
         if  food_type  and review:
-            conn = mysql.connector.connect(**dbconfig)
+            conn = pool.get_connection()
             cursor = conn.cursor()
             query = """Update rest set food_type = %s, review = %s where rest_name = %s"""
             values = (food_type, review, restname)
@@ -275,7 +222,7 @@ def update_(restname:str=None,food_type:str=None,review:str=None) -> None:
             cursor.close()
             conn.close()
         elif food_type and not review:
-            conn = mysql.connector.connect(**dbconfig)
+            conn = pool.get_connection()
             cursor = conn.cursor()
             query = """Update rest set  food_type = %s where rest_name = %s"""
             values = (food_type, restname)
@@ -284,7 +231,7 @@ def update_(restname:str=None,food_type:str=None,review:str=None) -> None:
             cursor.close()
             conn.close()
         elif not food_type and review :    
-            conn = mysql.connector.connect(**dbconfig)
+            conn = pool.get_connection()
             cursor = conn.cursor()
             query = """Update rest set  review = %s where rest_name = %s"""
             values = (review, restname)
@@ -298,18 +245,27 @@ def update_(restname:str=None,food_type:str=None,review:str=None) -> None:
 
 ##################################
 def get_echo():
-  url,db = get_cm()  
-  user,pass_ = get_sec()
-  dbconfig = { 'host': url,
-               'user': user,
-               'password': pass_,
-               'database': db,
-             }
 
-  conn = mysql.connector.connect(**dbconfig)
+  conn = pool.get_connection()   
   cursor = conn.cursor()
   _SQL = """select message from management"""
   cursor.execute(_SQL)
   message = cursor.fetchall()
   return message[0]
+
+
+
+###################################################
+########## Testing Connection Pooling #############
+###################################################
+def test_pool():
+
+      conn = pool.get_connection()
+      cursor = conn.cursor()
+      _SQL = """select message from management"""
+      cursor.execute(_SQL)
+      message = cursor.fetchall()
+      return message[0]
+
+
 
