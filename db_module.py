@@ -1,13 +1,30 @@
 import mysql.connector
+import os 
 
+
+
+def get_cm():
+    url = os.environ['url']
+    database = os.environ['db']
+    return url,database
+    #pass
+    # config = os.environ['MY_CONFIG']
+
+def get_sec():
+    username = os.environ['username']
+    password = os.environ['password']
+    return username,password
 
 def database_con():
 
-  dbconfig = { 'host': '127.0.0.1',
-               'user': 'rest',
-               'password': 'root123',
-               'database': 'restaurant', 
+  url,db = get_cm()
+  user,pass_ = get_sec()
+  dbconfig = { 'host': url,
+               'user': user,
+               'password': pass_,
+               'database': db,
              }
+  
 
   conn = mysql.connector.connect(**dbconfig)
   cursor = conn.cursor()
@@ -18,11 +35,14 @@ def database_con():
   #for row in res:
   #    print(row)
 def get_rest():
-    dbconfig = { 'host': '127.0.0.1',
-               'user': 'rest',
-               'password': 'root123',
-               'database': 'restaurant',
-             }
+    url,db = get_cm()
+    user,pass_ = get_sec()
+    dbconfig = { 'host': url,
+                 'user': user,
+                 'password': pass_,
+                 'database': db,
+               }
+  
     conn = mysql.connector.connect(**dbconfig)
     cursor = conn.cursor()
     _SQL = """select rest_name from rest"""
@@ -34,11 +54,15 @@ def get_rest():
     return restaurants
 
 def get_category():
-    dbconfig = { 'host': '127.0.0.1',
-               'user': 'rest',
-               'password': 'root123',
-               'database': 'restaurant',
-             }
+
+    url,db = get_cm()
+    user,pass_ = get_sec()
+    dbconfig = { 'host': url,
+                 'user': user,
+                 'password': pass_,
+                 'database': db,
+               }
+
     conn = mysql.connector.connect(**dbconfig)
     cursor = conn.cursor()
     _SQL = """select * from rest"""
@@ -52,11 +76,14 @@ def get_category():
 ################ get orders ######################
 
 def get_order():
-    dbconfig = { 'host': '127.0.0.1',
-               'user': 'rest',
-               'password': 'root123',
-               'database': 'restaurant',
-             }
+    url,db = get_cm()
+    user,pass_ = get_sec()
+    dbconfig = { 'host': url,
+                 'user': user,
+                 'password': pass_,
+                 'database': db,
+               }
+
     conn = mysql.connector.connect(**dbconfig)
     cursor = conn.cursor()
     _SQL = """select * from order_view"""
@@ -68,11 +95,15 @@ def get_order():
     return orders
 ####################################################
 def add_order(rest_name,username,order: str) -> None:
-    dbconfig = { 'host': '127.0.0.1',
-               'user': 'rest',
-               'password': 'root123',
-               'database': 'restaurant',
-             }
+
+    url,db = get_cm()
+    user,pass_ = get_sec()
+    dbconfig = { 'host': url,
+                 'user': user,
+                 'password': pass_,
+                 'database': db,
+               }
+
     conn = mysql.connector.connect(**dbconfig)
     cursor = conn.cursor()
     cursor.execute(
@@ -96,11 +127,15 @@ def add_order(rest_name,username,order: str) -> None:
 
 #####################################################
 def get_order_user_history(username):
-    dbconfig = { 'host': '127.0.0.1',
-               'user': 'rest',
-               'password': 'root123',
-               'database': 'restaurant',
-             }
+
+    url,db = get_cm()
+    user,pass_ = get_sec()
+    dbconfig = { 'host': url,
+                 'user': user,
+                 'password': pass_,
+                 'database': db,
+               }
+
     conn = mysql.connector.connect(**dbconfig)
     cursor = conn.cursor()
     cursor.execute(
@@ -115,11 +150,15 @@ def get_order_user_history(username):
 
 
 def auth_(username: str , password: str) -> bool:
-    dbconfig = { 'host': '127.0.0.1',
-               'user': 'rest',
-               'password': 'root123',
-               'database': 'restaurant',
-             }
+
+    url,db = get_cm()
+    user,pass_ = get_sec()
+    dbconfig = { 'host': url,
+                 'user': user,
+                 'password': pass_,
+                 'database': db,
+               }
+
     conn = mysql.connector.connect(**dbconfig)
     cursor = conn.cursor()
     query = "SELECT * FROM users"
@@ -138,11 +177,15 @@ def auth_(username: str , password: str) -> bool:
     return False    
 
 def register_(username:str,fn:str,ln:str,age:int,gender:str,password:str) -> None:
-    dbconfig = { 'host': '127.0.0.1',
-               'user': 'rest',
-               'password': 'root123',
-               'database': 'restaurant',
-             }
+
+    url,db = get_cm()
+    user,pass_ = get_sec()
+    dbconfig = { 'host': url,
+                 'user': user,
+                 'password': pass_,
+                 'database': db,
+               }
+
     #print (username + fn + ln + str(age) + gender + password)
     conn = mysql.connector.connect(**dbconfig)
     cursor = conn.cursor()
@@ -157,11 +200,15 @@ def register_(username:str,fn:str,ln:str,age:int,gender:str,password:str) -> Non
 
 
 def create_(name:str,food_type:str,review:str) -> None:
-    dbconfig = { 'host': '127.0.0.1',
-               'user': 'rest',
-               'password': 'root123',
-               'database': 'restaurant',
-             }
+
+    url,db = get_cm()
+    user,pass_ = get_sec()
+    dbconfig = { 'host': url,
+                 'user': user,
+                 'password': pass_,
+                 'database': db,
+               }
+
     conn = mysql.connector.connect(**dbconfig)
     cursor = conn.cursor()
     query = "insert into rest (rest_name,food_type,review) values (%s, %s, %s)"
@@ -172,11 +219,15 @@ def create_(name:str,food_type:str,review:str) -> None:
     conn.close()
 
 def delete_(name:str) -> None:
-    dbconfig = { 'host': '127.0.0.1',
-               'user': 'rest',
-               'password': 'root123',
-               'database': 'restaurant',
-             }
+
+    url,db = get_cm()
+    user,pass_ = get_sec()
+    dbconfig = { 'host': url,
+                 'user': user,
+                 'password': pass_,
+                 'database': db,
+               }
+
     conn = mysql.connector.connect(**dbconfig)
     cursor = conn.cursor()
     #query = "delete from rest where rest_name = %s"
@@ -206,11 +257,14 @@ def update_(restname:str=None,food_type:str=None,review:str=None) -> None:
         review=None
         return (mesg)
     else:
-        dbconfig = { 'host': '127.0.0.1',
-               'user': 'rest',
-               'password': 'root123',
-               'database': 'restaurant',
-             }
+        url,db = get_cm()
+        user,pass_ = get_sec()
+        dbconfig = { 'host': url,
+                     'user': user,
+                     'password': pass_,
+                     'database': db,
+                   }
+
         if  food_type  and review:
             conn = mysql.connector.connect(**dbconfig)
             cursor = conn.cursor()
@@ -244,10 +298,12 @@ def update_(restname:str=None,food_type:str=None,review:str=None) -> None:
 
 ##################################
 def get_echo():
-  dbconfig = { 'host': '127.0.0.1',
-               'user': 'rest',
-               'password': 'root123',
-               'database': 'restaurant',
+  url,db = get_cm()  
+  user,pass_ = get_sec()
+  dbconfig = { 'host': url,
+               'user': user,
+               'password': pass_,
+               'database': db,
              }
 
   conn = mysql.connector.connect(**dbconfig)
