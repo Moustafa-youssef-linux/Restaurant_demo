@@ -24,7 +24,7 @@ spec:
         app: webapp
     spec:
       containers:
-        - image: moustafayoussef/restaurant_webapp:0.2
+        - image: moustafayoussef/restaurant_webapp:0.3
           imagePullPolicy: Always
           name: webapp
           resources: {}
