@@ -1,7 +1,7 @@
 from flask import Flask,render_template, redirect, url_for, request, session
 import  db_module
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 app.secret_key = 'YouWillNeverGuess'
 ##
@@ -57,15 +57,11 @@ def registration():
         age_ = request.form['age']
         pass_ = request.form['password']
         gender_ = request.form['gender']
-        exist = db_module.auth_(u_,pass_)
         print (u_+ pass_ + ln_ + age_ + gender_ + pass_)
-        if  u_ !=  'admin' and not exist:
-          result= db_module.register_(u_,fn_,ln_,age_,gender_,pass_)
+        if  u_ !=  'admin':
+          result= db_module.register_(u_,fn_,ln_,age_,gender_,pass_, bg_image=background-1.jpg)
           #return redirect(url_for('reg_result', error=error))
           return render_template('reg_result.html')
-        elif exist: 
-            error = "The user is already registered\n. Please try again.\n <div class=\"text\"> <a href=\"/login\">Login.</a>"
-            return str(error)
         else:
             error = 'Please Fill all the inputs'
     return render_template('registration.html', error=error)

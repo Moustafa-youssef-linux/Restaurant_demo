@@ -2,7 +2,7 @@
 # Database Dockerfile
 #
 
-FROM registry.access.redhat.com/rhscl/mysql-80-rhel7
+FROM mysql
 LABEL version="1.0" \
 description="This is mysql container image" \
 creationDate="22-07-02" \
