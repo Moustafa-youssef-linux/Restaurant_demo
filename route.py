@@ -57,7 +57,7 @@ def registration():
         age_ = request.form['age']
         pass_ = request.form['password']
         gender_ = request.form['gender']
-        exist = db_module.auth_(u_,pass_)
+        exist = db_module.verify_username(u_)
         print (u_+ pass_ + ln_ + age_ + gender_ + pass_)
         if  u_ !=  'admin' and not exist:
           result= db_module.register_(u_,fn_,ln_,age_,gender_,pass_)

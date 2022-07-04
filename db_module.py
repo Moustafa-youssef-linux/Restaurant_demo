@@ -143,6 +143,26 @@ def auth_(username: str , password: str) -> bool:
             return True
     return False    
 
+################################################################
+def verify_username(username: str ) -> bool:
+
+
+    conn = pool.get_connection()
+    cursor = conn.cursor()
+    query = "SELECT * FROM users"
+    cursor.execute(query)
+    user_records = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    for user in user_records:
+        #print (user)
+        if username == user[1]:
+            return True
+    return False
+
+################################################################
+
 def register_(username:str,fn:str,ln:str,age:int,gender:str,password:str) -> None:
 
 
