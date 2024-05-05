@@ -6,6 +6,11 @@ services:
       dockerfile: ./Dockerfile
       args:
         buildno: 1
+    environment:
+       - url=database
+       - db=restaurant
+       - username=rest
+       - password=root123  
   database:
     build:      
       context: ./database
