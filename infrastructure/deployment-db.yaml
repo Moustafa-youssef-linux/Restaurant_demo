@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: test-db
+  name: test-db
+  namespace: restaurant-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-db
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: test-db
+    spec:
+      containers:
+      - image: us-central1-docker.pkg.dev/third-wharf-422315-u9/database/db:latest
+        name: database
+        resources: {}
+status: {}
