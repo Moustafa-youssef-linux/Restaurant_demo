@@ -110,7 +110,7 @@ jobs:
           echo -n "as variable $PROJECT_ID"
           echo -n "as variable but in different format ${{ env.PROJECT_ID }}"
           echo "as a secret ${{ secrets.GKE_PROJECT }}"
-          docker build --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA" 
+          docker build --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA"  .
           
       # Push the Docker image to Google Artifact Registry
       - name: Publish
