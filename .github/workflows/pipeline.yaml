@@ -107,8 +107,9 @@ jobs:
       - name: Build
         run: |-
           echo "#########################"
-          echo -n "${PROJECT_ID}"
-          # us-central1-docker.pkg.dev/third-wharf-422315-u9/restaurant-demo
+          echo -n "as variable $PROJECT_ID"
+          echo -n "as variable but in different format ${{ env.PROJECT_ID }}"
+          echo "as a secret ${{ secrets.GKE_PROJECT }}"
           docker build --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA" 
           
       # Push the Docker image to Google Artifact Registry
