@@ -114,6 +114,12 @@ jobs:
           docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA"
           
 
+
+      - name: running get cred manually
+        run: |-
+          
+          gcloud container attached clusters get-credentials isolution-cluster --location=us-central1
+
       - name: Set up GKE credentials
         uses: google-github-actions/get-gke-credentials@v2
         with:
