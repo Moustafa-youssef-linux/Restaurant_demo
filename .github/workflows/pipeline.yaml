@@ -106,10 +106,6 @@ jobs:
       # Build the Docker image
       - name: Build
         run: |-
-          echo "#########################"
-          echo -n "as variable $PROJECT_ID"
-          echo -n "as variable but in different format ${{ env.PROJECT_ID }}"
-          echo "as a secret ${{ secrets.GKE_PROJECT }}"
           docker build --tag "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA"  .
           
       # Push the Docker image to Google Artifact Registry
@@ -119,7 +115,7 @@ jobs:
           
 
       - name: Set up GKE credentials
-        uses: google-github-actions/get-gke-credentials@v0
+        uses: google-github-actions/get-gke-credentials@v2
         with:
           cluster_name: ${{ env.GKE_CLUSTER }}
           location: ${{ env.GKE_ZONE }}
