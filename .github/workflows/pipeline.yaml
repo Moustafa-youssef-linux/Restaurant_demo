@@ -118,7 +118,7 @@ jobs:
       - name: running get cred manually
         run: |-
           
-          gcloud container attached clusters get-credentials isolution-cluster --location=us-central1
+          gcloud container attached clusters get-credentials isolution-cluster --location=us-central1-c
 
       - name: Set up GKE credentials
         uses: google-github-actions/get-gke-credentials@v2
