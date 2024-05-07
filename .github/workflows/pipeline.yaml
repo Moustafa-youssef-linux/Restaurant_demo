@@ -140,6 +140,6 @@ jobs:
           #./kustomize build . | kubectl apply -f -
           #kubectl rollout status deployment/$DEPLOYMENT_NAME
           #kubectl get services -o wide
-          kubectl rollout restart deployment/test-app
+          kubectl rollout restart deployment/$DEPLOYMENT_NAME -n restaurant-demo
       # END - Docker auth and build
 
