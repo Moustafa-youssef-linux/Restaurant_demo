@@ -2,7 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   creationTimestamp: null
-  name: cicd-role
+  name: cicd
   namespace: restaurant-demo
 rules:
   - apiGroups:
@@ -24,3 +24,4 @@ rules:
       - list
       - watch
       - create
+      - update
