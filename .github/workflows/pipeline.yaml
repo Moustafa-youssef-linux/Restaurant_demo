@@ -106,14 +106,22 @@ jobs:
       # Build the Docker image
       - name: Build
         run: |-
+          
+          export SHA7=${GITHUB_SHA::7}
+          export branch_name="$(cut -d'/' -f3 <<<'${{ github.ref }}')"
+          
           docker build -t "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA"  \
-           -t "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:latest" .
+           -t "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:latest" \
+            -t "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$branch_name" .
           
       # Push the Docker image to Google Artifact Registry
       - name: Publish
         run: |-
+          export SHA7=${GITHUB_SHA::7}
+          export branch_name="$(cut -d'/' -f3 <<<'${{ github.ref }}')"
           docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA"
-          docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:latest"
+          # docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:latest"
+          docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$branch_name"
           
 #      - name: update image tag in helm values file
 #        id: update-image
