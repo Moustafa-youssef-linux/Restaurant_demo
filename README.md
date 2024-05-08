@@ -10,7 +10,6 @@ GitHub Link: https://github.com/Moustafa-youssef-linux/Restaurant_demo
 
 
 
-#################### checking #####
 **NOTE**
 
 There are two branches main and test.You can choose anyone of them
