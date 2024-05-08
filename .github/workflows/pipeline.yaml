@@ -148,8 +148,8 @@ jobs:
         run: |
           git config user.email moustafayoussef759@gmail.com
           git config user.name  Moustafa-youssef-linux 
-
-          sed -i "s/placeholder-for-image-tag/${GITHUB_SHA}/g" infrastructure/restaurant-app/values.yaml
+          old_img_tag=$(cat infrastructure/restaurant-app/values.yaml | grep -i "tag\:" | awk '{print $2}' | tr -d '"')
+          sed -i "s/$old_img_tag/${GITHUB_SHA}/g" infrastructure/restaurant-app/values.yaml
           cat infrastructure/restaurant-app/values.yaml
           git add infrastructure/restaurant-app/values.yaml
           git commit -m 'Done  by Github Action'
