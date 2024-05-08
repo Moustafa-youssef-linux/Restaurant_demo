@@ -133,6 +133,30 @@ jobs:
           location: ${{ env.GKE_ZONE }}
 
 
+
+
+  modifygit:
+    needs: docker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        name: changing the deployment of git repo
+        with:
+          repository: 'moustafa-youssef-linux/Restaurant_demo'
+          token: ${{ secrets.GIT_PASSWORD }}
+      - name: modify the image
+        run: |
+          git config user.email moustafayoussef759@gmail.com
+          git config user.name  Moustafa-youssef-linux 
+
+          sed -i "s/placeholder-for-image-tag/${GITHUB_SHA}/g" infrastructure/restaurant-app/values.yaml
+          cat infrastructure/restaurant-app/values.yaml
+          git add infrastructure/restaurant-app/values.yaml
+          git commit -m 'Done  by Github Action'
+          git push origin test
+        env:
+          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+          GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
 #      # Set up kustomize
 #      - name: Set up Kustomize
 #        run: |-
