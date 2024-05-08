@@ -153,7 +153,7 @@ jobs:
           cat infrastructure/restaurant-app/values.yaml
           git add infrastructure/restaurant-app/values.yaml
           git commit -m 'Done  by Github Action'
-          git push origin test
+          git push origin main
         env:
           GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
           GIT_PASSWORD: ${{ secrets.GIT_PASSWORD }}
