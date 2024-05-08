@@ -136,7 +136,7 @@ jobs:
 
 
   modifygit:
-    needs: build
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
