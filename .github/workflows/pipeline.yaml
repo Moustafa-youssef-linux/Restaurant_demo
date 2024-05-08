@@ -114,7 +114,10 @@ jobs:
         run: |-
           docker push "$GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$IMAGE:$GITHUB_SHA"
           
-
+      - name: update image tag in helm values file
+        id: update-image
+        run: |-
+          sed -i 's/placeholder-for-image-tag/$GITHUB_SHA/g' values.yaml
 
 #      - name: running get cred manually
 #        run: |-
