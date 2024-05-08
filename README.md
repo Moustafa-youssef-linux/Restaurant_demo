@@ -1,6 +1,8 @@
 # Restaurant_demo
 
 Name= Moustafa Youssef
+LinkedIn = https://www.linkedin.com/in/moustafa-youssef-63398a116/
+Email: moustafayoussef759@gmail.com
 
 
 dockerhub Link: https://hub.docker.com/repository/docker/moustafayoussef/restaurant_database
@@ -8,15 +10,10 @@ GitHub Link: https://github.com/Moustafa-youssef-linux/Restaurant_demo
 
 
 
-
-The Development environment in which i did the task is:
-
-Red Hat Enterprise Linux 8.4 (Ootpa)
-
-
+#################### checking #####
 **NOTE**
 
-There are two branches main and test. Please Conider only test branch. Since I have lately a conflict between them.
+There are two branches main and test.You can choose anyone of them
 
 ################################################################################################
 ########## Applicatoin Info ####################################################################
