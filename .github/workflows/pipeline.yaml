@@ -147,6 +147,7 @@ jobs:
   modifygit:
     needs: deploy
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && !contains( github.event.head_commit.message, 'Done  by Github Action') }}
     steps:
       - uses: actions/checkout@v3
         name: changing the deployment of git repo
