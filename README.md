@@ -14,7 +14,7 @@ GitHub Link: https://github.com/Moustafa-youssef-linux/Restaurant_demo
 
 **NOTE**
 
-There are two branches main and test.you can choose anyone of them
+There are two branches main and test.You can choose anyone of them
 
 ################################################################################################
 ########## Applicatoin Info ####################################################################
