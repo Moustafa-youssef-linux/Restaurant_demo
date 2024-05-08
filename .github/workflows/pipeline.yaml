@@ -145,7 +145,7 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         name: changing the deployment of git repo
         with:
           repository: 'moustafa-youssef-linux/Restaurant_demo'
