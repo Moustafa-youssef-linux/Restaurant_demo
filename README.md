@@ -9,10 +9,6 @@ GitHub Link: https://github.com/Moustafa-youssef-linux/Restaurant_demo
 
 
 
-The Development environment in which i did the task is:
-
-Red Hat Enterprise Linux 8.4 (Ootpa)
-
 
 **NOTE**
 
