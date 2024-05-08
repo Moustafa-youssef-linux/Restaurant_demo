@@ -8,7 +8,7 @@ image:
   repository: us-central1-docker.pkg.dev/third-wharf-422315-u9/restaurant-demo/app
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "3b0a118756c02f5909c70bce4773f03dabafe77d"
+  tag: "cbced6eda46c297e6de41e7e6c59ee35985e1181"
 
 imagePullSecrets: []
 nameOverride: ""
