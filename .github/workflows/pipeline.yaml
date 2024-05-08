@@ -46,7 +46,7 @@ name: Build and Deploy to Cloud Run
 
 on:
   push:
-    branches: [ "test" ]
+    branches: [ "main" ]
 
 env:
 
