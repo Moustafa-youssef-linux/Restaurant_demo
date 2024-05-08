@@ -117,7 +117,7 @@ jobs:
       - name: update image tag in helm values file
         id: update-image
         run: |-
-          sed -i 's/placeholder-for-image-tag/$GITHUB_SHA/g' infrastructure/restaurant-app/values.yaml
+          sed -i "s/placeholder-for-image-tag/${GITHUB_SHA}/g" infrastructure/restaurant-app/values.yaml
           cat infrastructure/restaurant-app/values.yaml
 
 #      - name: running get cred manually
