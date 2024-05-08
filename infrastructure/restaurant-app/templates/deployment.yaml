@@ -50,10 +50,6 @@ spec:
             httpGet:
               path: /healthz
               port: http
-          readinessProbe:
-            httpGet:
-              path: /health_db
-              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
