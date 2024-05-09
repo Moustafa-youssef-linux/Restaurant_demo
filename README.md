@@ -32,16 +32,27 @@ password: admin@123
 the available APIs:
 
 @app.route("/")
+
 @app.route('/login', methods=['GET', 'POST'])
+
 @app.route('/logout', methods=['GET'])
+
 @app.route('/registration', methods=['GET', 'POST'])
+
 @app.route('/restaurants', methods=['GET','POST'])
+
 @app.route('/admin_console', methods=['GET','POST'])
+
 @app.route('/rest/create', methods=['GET', 'POST'])
+
 @app.route('/rest/delete', methods=['GET', 'POST'])
+
 @app.route('/rest/update', methods=['GET','POST'])
+
 @app.route('/order', methods=['GET','POST'])
+
 @app.route('/healthz', methods=['GET'])
+
 @app.route('/health_db', methods=['GET'])
 
 
@@ -61,21 +72,29 @@ The GitOps approach will be only applied for backend application.
 
 You can find the database container dockerfile in ./database/Dockerfile with sql script for seeding the database.
 
-###############################################################################################
-
-############################ K8s ###############################################################################
-there is a directory called K8s under which you can find all the required resources for deploying the app on K8s
+###########################################################################################################################
+**Second**
+###################################################### GitOps #############################################################
+I've used argocd as required by the task with Helm.The ArgoCd detects the chart of the app in this path ./infrastructure/restartaurant-app and use manifests.
 
 there's a secret resource which is created for storing db username & password
 
 Note(1):
-the ingress resource is deployed and tested with nginx ingress controller
+the ingress resource is deployed and tested with nginx ingress controller of community version
 
 Note(2):
-I've used DockerHub to store the images after building them.It's better so that for testing the app the K8s will pull it directly from there.
+I've used GCP artifact registry to store the images after building them.It's better so that for testing the app the K8s will pull it directly from there.
 
-################################################################################################################
+**Third**
+########################################### GCP #####################################################################
 
+1- I have built GKE as VPC-native cluster as it's more secure with two endpoint for control plan one public and other private.
+2- using Cloud NAT to let compute node be able to pull container images from internet.
+3- configuring workload identity federation including federation pool and serviceaccount iam policies and allow policies to let github authenticate and use resources.
+4- Deploying Nginx ingress controller of community version to expose service to outside world.
+5- Deploying Prometheus and grafana in monitoring namespace and expose granfa as ingress object http://grafana.example.com
+6- Deploying Argocd in argocd namespace and exposed as ingress object http://argocd.example.com
+7- Deploying Vault in vault namespace,configuring vault template,annotations so that the vault-agent can inject secrets(database username and password) into app pod.
 
 # for anything not clear or not mentioned in ReadMe,I will be grateful to hear back from you
 

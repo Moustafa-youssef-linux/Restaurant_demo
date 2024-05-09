@@ -1,46 +1,20 @@
-# This workflow build and push a Docker container to Google Artifact Registry and deploy it on Cloud Run when a commit is pushed to the "test" branch
+# This workflow build and push a Docker container to Google Artifact Registry and deploy it on Google Kubernetes Engine when a commit is pushed to the "test" branch
 #
 # Overview:
 #
-# 1. Authenticate to Google Cloud
-# 2. Authenticate Docker to Artifact Registry
-# 3. Build a docker container
-# 4. Publish it to Google Artifact Registry
-# 5. Deploy it to Cloud Run
+# 1. GCP is configured to authenticate and authorize Github using workload cloud federation instead of using serviceaccount long-lived key
+# 2. Github provides the repo name as attribute to google workload cloud federation to retrieve the token
+# 3. configure Docker to save token of google artifact registry to be able to use it
+# 4. Build docker image
+# 5. Push it to artifact registry under restaurant-demo repo
+# 6- an optional step for authenticating to K8s that was being used for testing the deployment before integrating argocd
+# 7- modifying image tag in values to let argocd trigger deployment
 #
-# To configure this workflow:
 #
-# 1. Ensure the required Google Cloud APIs are enabled:
-#
-#    Cloud Run            run.googleapis.com
-#    Artifact Registry    artifactregistry.googleapis.com
-#
-# 2. Create and configure Workload Identity Federation for GitHub (https://github.com/google-github-actions/auth#setting-up-workload-identity-federation)
-#
-# 3. Ensure the required IAM permissions are granted
-#
-#    Cloud Run
-#      roles/run.admin
-#      roles/iam.serviceAccountUser     (to act as the Cloud Run runtime service account)
-#
-#    Artifact Registry
-#      roles/artifactregistry.admin     (project or repository level)
-#
-#    NOTE: You should always follow the principle of least privilege when assigning IAM roles
-#
-# 4. Create GitHub secrets for WIF_PROVIDER and WIF_SERVICE_ACCOUNT
-#
-# 5. Change the values for the GAR_LOCATION, SERVICE and REGION environment variables (below).
-#
-# NOTE: To use Google Container Registry instead, replace ${{ env.GAR_LOCATION }}-docker.pkg.dev with gcr.io
-#
-# For more support on how to run this workflow, please visit https://github.com/marketplace/actions/deploy-to-cloud-run
-#
-# Further reading:
-#   Cloud Run IAM permissions                 - https://cloud.google.com/run/docs/deploying
-#   Artifact Registry IAM permissions         - https://cloud.google.com/artifact-registry/docs/access-control#roles
-#   Container Registry vs Artifact Registry   - https://cloud.google.com/blog/products/application-development/understanding-artifact-registry-vs-container-registry
-#   Principle of least privilege              - https://cloud.google.com/blog/products/identity-security/dont-get-pwned-practicing-the-principle-of-least-privilege
+# Further configurations:
+#   adding github secrets
+#   jobs run with conditions
+
 
 name: Build and Deploy to Cloud Run
 
@@ -61,7 +35,7 @@ env:
 
 
 jobs:
-  deploy:
+  docker:
 
     name: Setup, Build, Publish, and Deploy
     runs-on: ubuntu-latest
@@ -145,7 +119,7 @@ jobs:
 
 
   modifygit:
-    needs: deploy
+    needs: docker
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' && !contains( github.event.head_commit.message, 'Done  by Github Action') }}
     steps:
