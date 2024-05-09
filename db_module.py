@@ -1,6 +1,7 @@
 import mysql.connector
 import mysql.connector.pooling
-import os 
+import os
+import json
 
 
 def get_cm():
@@ -12,8 +13,21 @@ def get_cm():
 
 
 def get_sec():
-    username = os.environ['username']
-    password = os.environ['password']
+
+
+    vault_injected_secret = open('/app/secrets/restaurant-secret')
+
+    data = json.load(vault_injected_secret)
+    # Iterating through the json
+    # list
+    username = (data['username'])
+    password = (data['password'])
+    print ("username:" + username)
+    print ("password:" + password)
+
+
+    #username = os.environ['username']
+    #password = os.environ['password']
     return username,password
 
 
