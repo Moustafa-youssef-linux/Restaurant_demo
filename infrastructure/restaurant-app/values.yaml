@@ -33,7 +33,7 @@ podAnnotations:
   vault.hashicorp.com/agent-inject-template-restaurant-secret: |
       {{- with secret "internal/data/restaurant/mysqldb" -}}
         {
-          "username" : "{{ .Data.data.username }}"
+          "username" : "{{ .Data.data.username }}",
           "password" : "{{ .Data.data.password }}"
         }
       {{- end }}
