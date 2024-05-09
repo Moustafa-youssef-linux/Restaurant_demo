@@ -15,9 +15,9 @@ def get_cm():
 def get_sec():
 
 
-    vault-injected-secret = open('/app/secret/restaurant-secret')
+    vault_injected_secret = open('/app/secret/restaurant-secret')
 
-    data = json.load(vault-injected-secret)
+    data = json.load(vault_injected_secret)
     # Iterating through the json
     # list
     username = (data['username'])
