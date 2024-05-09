@@ -12,7 +12,7 @@ GitHub Link: https://github.com/Moustafa-youssef-linux/Restaurant_demo
 
 **First**
 
-There are two branches main and test.You can consider main branch for getting the last stable version.
+There are two branches main and test.You can consider TEST branch for getting the last stable version.
 
 ############################################################################################################################
 ###################################### Application Info ####################################################################
@@ -89,13 +89,21 @@ I've used GCP artifact registry to store the images after building them.It's bet
 ########################################### GCP #####################################################################
 
 1- I have built GKE as VPC-native cluster as it's more secure with two endpoint for control plan one public and other private.
+
 2- using Cloud NAT to let compute node be able to pull container images from internet.
+
 3- configuring workload identity federation including federation pool and serviceaccount iam policies and allow policies to let github authenticate and use resources.
+
 4- Deploying Nginx ingress controller of community version to expose service to outside world.
+
 5- The Ingress controller has provisioned GCP Loadbalancer which in turn will be used to forward traffic to internal GKE pods
+
 6- Deploying Prometheus and grafana in monitoring namespace and expose granfa as ingress object http://grafana.example.com
+
 7- Deploying Argocd in argocd namespace and exposed as ingress object http://argocd.example.com
+
 8- Deploying Vault in vault namespace,configuring vault template,annotations so that the vault-agent can inject secrets(database username and password) into app pod.
+
 
 # for anything not clear or not mentioned in ReadMe,I will be grateful to hear back from you
 
