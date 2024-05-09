@@ -30,14 +30,16 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-           - name: url
-             value: restaurant-db
-           - name: username
-             value: rest
-           - name: password
-             value: root123
-           - name: db
-             value: restaurant
+            - name: url
+              valueFrom:
+                  configMapKeyRef:
+                    name: db-cm
+                    key: url
+            - name: database
+              valueFrom:
+                  configMapKeyRef:
+                    name: db-cm
+                    key: database
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
