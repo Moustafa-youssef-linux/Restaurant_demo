@@ -35,7 +35,7 @@ spec:
                   configMapKeyRef:
                     name: db-cm
                     key: url
-            - name: database
+            - name: db
               valueFrom:
                   configMapKeyRef:
                     name: db-cm
