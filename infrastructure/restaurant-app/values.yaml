@@ -29,14 +29,14 @@ podAnnotations:
   vault.hashicorp.com/agent-inject-status: "update"
   vault.hashicorp.com/role: "restaurantapp"
   vault.hashicorp.com/secret-volume-path: "/app/secrets/"
-  vault.hashicorp.com/agent-inject-secret-restaurant: "internal/restaurant/mysqldb"
+  vault.hashicorp.com/agent-inject-secret-restaurant: "internal/data/restaurant/mysqldb"
   vault.hashicorp.com/agent-inject-template-restaurant: |
-      {{- with secret "internal/restaurant/mysqldb" -}}
+      {{- with secret "internal/data/restaurant/mysqldb" -}}
       {
-        "username" : "{{ .Data.username }}",
-        "password" : "{{ .Data.password }}",
-        "url" : "{{ .Data.url }}",
-        "db" : "{{ .Data.db }}"
+        "username" : "{{ .Data.data.username }}",
+        "password" : "{{ .Data.data.password }}",
+        "url" : "{{ .Data.data.url }}",
+        "db" : "{{ .Data.data.db }}"
       }
       {{- end }}
 
