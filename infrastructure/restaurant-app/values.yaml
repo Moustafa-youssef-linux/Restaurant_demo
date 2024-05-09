@@ -23,7 +23,12 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: "restaurant-app"
 
-podAnnotations: {}
+podAnnotations:
+  vault.hashicorp.com/agent-inject: "true"
+  vault.hashicorp.com/agent-inject-token: "true"
+  vault.hashicorp.com/agent-inject-status: "update"
+  vault.hashicorp.com/role: "restaurantapp"
+  vault.hashicorp.com/secret-volume-path: "/app/secrets/"
 
 podSecurityContext: {}
   # fsGroup: 2000
