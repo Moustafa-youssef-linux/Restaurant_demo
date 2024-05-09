@@ -78,6 +78,8 @@ You can find the database container dockerfile in ./database/Dockerfile with sql
 I've used argocd as required by the task with Helm.The ArgoCd detects the chart of the app in this path ./infrastructure/restartaurant-app and use manifests.
 
 there's a secret resource which is created for storing db username & password
+There's ConfigMap for storing database url and database name
+There's a serviceaccount created for ABI-backend app pod with role and rolebinding 
 
 Note(1):
 the ingress resource is deployed and tested with nginx ingress controller of community version
