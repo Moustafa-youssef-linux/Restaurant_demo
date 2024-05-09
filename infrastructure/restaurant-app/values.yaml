@@ -37,18 +37,6 @@ podAnnotations:
           "password" : "{{ .Data.data.password }}"
         }
       {{- end }}
-  vault.hashicorp.com/agent-inject-template-restaurant-password: |
-      {{- with secret "internal/data/restaurant/mysqldb" -}}
-            "password" : "{{ .Data.data.password }}"
-      {{- end }}
-  vault.hashicorp.com/agent-inject-template-restaurant-db: |
-       {{- with secret "internal/data/restaurant/mysqldb" -}}
-            "db" : "{{ .Data.data.db }}"
-       {{- end }}
-  vault.hashicorp.com/agent-inject-template-restaurant-url: |
-       {{- with secret "internal/data/restaurant/mysqldb" -}}
-          "url" : "{{ .Data.data.url }}"
-       {{- end }}
 
 podSecurityContext: {}
   # fsGroup: 2000
