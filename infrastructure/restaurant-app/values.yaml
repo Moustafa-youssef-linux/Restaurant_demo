@@ -73,3 +73,8 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+
+vault:
+  status: 'kv_static_injector_template_file'
+  kind: 'injector'
